@@ -1,0 +1,52 @@
+{
+  "name": "@patternfly/ai-infra-ui-components",
+  "version": "1.0.0",
+  "description": "List of UI components based on Patternfly used for AI infra.",
+  "main": "dist/esm/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "build": "tsc --build --verbose ./tsconfig.json",
+    "build:fed:packages": "node generate-fed-package-json.js",
+    "clean": "rimraf dist",
+    "docs:develop": "pf-docs-framework start",
+    "docs:build": "pf-docs-framework build all --output public",
+    "docs:serve": "pf-docs-framework serve public --port 5000",
+    "docs:screenshots": "pf-docs-framework screenshots --urlPrefix http://localhost:5000",
+    "test:a11y": "patternfly-a11y --config patternfly-a11y.config",
+    "serve:a11y": "yarn serve coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patternfly/AI-infra-ui-components"
+  },
+  "author": "Red Hat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patternfly/AI-infra-ui-components/issues"
+  },
+  "homepage": "https://github.com/patternfly/AI-infra-ui-components#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@patternfly/react-core": "6.0.0-alpha.100"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@patternfly/documentation-framework": "6.0.0-alpha.79",
+    "@patternfly/patternfly": "6.0.0-alpha.205",
+    "@patternfly/react-table": "6.0.0-alpha.101",
+    "@patternfly/react-code-editor": "6.0.0-alpha.100",
+    "rimraf": "^6.0.1",
+    "@patternfly/patternfly-a11y": "^4.3.1",
+    "react-monaco-editor": "^0.56.0",
+    "monaco-editor": "^0.50.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/plugin-proposal-private-methods": "^7.18.6"
+  }
+}
