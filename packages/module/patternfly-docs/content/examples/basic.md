@@ -9,10 +9,11 @@ id: AI-infra-ui-components
 source: react
 # If you use typescript, the name of the interface to display props for
 # These are found through the sourceProps function provided in patternfly-docs.source.js
-propComponents: ['ExtendedButton']
+propComponents: ['ExtendedButton', 'DeleteModal']
 ---
 
 import { ExtendedButton } from "@patternfly/ai-infra-ui-components";
+import { DeleteModal } from "@patternfly/ai-infra-ui-components";
 
 ## Basic usage
 
