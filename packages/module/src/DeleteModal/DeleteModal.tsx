@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   Alert,
+  AlertProps,
   Button,
-  FormGroup,
-  List,
-  ListItem,
+  Flex,
+  FlexItem,
   Modal,
   ModalBody,
   ModalFooter,
@@ -12,144 +12,122 @@ import {
   ModalProps,
   Stack,
   StackItem,
-  TextInput
+  TextInput,
+  TextInputProps
 } from '@patternfly/react-core';
 
-/** Props specifying either one item or a list of items to delete */
-type ItemProps =
-  | {
-      /** Type of item to delete (e.g. project, pipeline server, model registry) */
-      item: string;
-      /** Name of the item to delete */
-      itemName: string;
-      items?: never;
-      itemNames?: never;
-    }
-  | {
-      /** Type of items to delete in plural (e.g. projects, pipeline servers, model registries) */
-      items: string;
-      /** List of names of the items to delete */
-      itemNames: string[];
-      item?: never;
-      itemName?: never;
-    };
-
-export type DeleteModalProps = Omit<ModalProps, 'children'> &
-  ItemProps & {
-    /** Delete variant. Destructive and extra-destructive variants will show a warning icon and danger button. For extra-destructive variant, text input confirmation is needed. */
-    deleteVariant?: 'extra-destructive' | 'destructive' | 'easily-recoverable';
-    /** Message describing what will deleted */
-    message?: {
-      toDelete?: string;
-      resourcesToDelete?: string;
-      endNote?: string;
-    };
-    /** Callback on clicking the delete button */
-    onDelete?: () => void;
-    /** Callback on clicking the cancel button */
-    onCancel?: () => void;
-    /** Error indicating deletion has failed */
-    error?: Error;
-    /** Modal ref */
-    ref: React.RefObject<Modal>;
-  };
+export type DeleteModalProps = ModalProps & {
+  /** Content rendered inside the modal header title. */
+  title: React.ReactNode;
+  /** Delete variant. Destructive and extra-destructive variants will show a warning icon and danger button. For extra-destructive variant, text input confirmation is needed. */
+  deleteVariant?: 'extra-destructive' | 'destructive' | 'easily-recoverable';
+  /** Text which the user should type in to confirm deletion (only for extra-destructive delete variant) */
+  deleteName: string;
+  /** Message describing what should the user type in to confirm deletion (only for extra-destructive delete variant) */
+  confirmationMessage?: (deleteName: string) => React.ReactNode;
+  /** Text of the delete button */
+  deleteButtonText?: string;
+  /** Text of the cancel button */
+  cancelButtonText?: string;
+  /** Callback on clicking the delete button */
+  onDelete: () => void;
+  /** Flag indicating that deletion is currently in progress */
+  isDeleting?: boolean;
+  /** Error indicating deletion has failed */
+  error?: Error;
+  /** Id of the modal for testing purposes (defaults to "delete-modal") */
+  testId?: string;
+  /** Additional props for confirmation text input (only for extra-destructive delete variant) */
+  textInputProps?: TextInputProps;
+  /** Additional props for error alert */
+  errorAlertProps?: AlertProps;
+  /** Modal ref */
+  ref?: React.RefObject<Modal>;
+};
 
 export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
-  item,
-  items,
-  itemName,
-  itemNames,
-  deleteVariant = 'destructive',
+  children,
+  title,
+  deleteVariant = 'extra-destructive',
+  deleteName,
+  confirmationMessage = (deleteName) => (
+    <>
+      Type <strong>{deleteName}</strong> to confirm deletion:
+    </>
+  ),
+  deleteButtonText = 'Delete',
+  cancelButtonText = 'Cancel',
   onDelete,
-  onCancel,
-  message = {
-    resourcesToDelete: '',
-    endNote: ''
-  },
+  isDeleting,
   error,
+  testId,
+  textInputProps,
+  errorAlertProps,
+  onClose,
+  isOpen,
   ...props
 }: DeleteModalProps) => {
-  const isPlural = item === undefined;
-
   const [confirmationText, setConfirmationText] = React.useState('');
-  const expectedConfirmationText = isPlural ? `delete ${itemNames.length} ${items}` : itemName;
+  const confirmed = deleteVariant === 'extra-destructive' ? confirmationText.trim() === deleteName : true;
 
-  const confirmed = deleteVariant === 'extra-destructive' ? confirmationText === expectedConfirmationText : true;
-
-  const toDeleteMessage = message.toDelete ?? ` and all of ${isPlural ? 'their' : 'its'} resources`;
-
-  const itemToDelete = `${itemNames ? `${itemNames.length} ` : ''}${item ?? items}`;
-  const modalHeaderTitle = `Delete ${itemToDelete}?`;
+  React.useEffect(() => {
+    if (!isOpen) {
+      setConfirmationText('');
+    }
+  }, [isOpen]);
 
   return (
-    <Modal variant="small" {...props}>
-      <ModalHeader
-        title={modalHeaderTitle}
-        titleIconVariant={deleteVariant !== 'easily-recoverable' ? 'warning' : undefined}
-      />
+    <Modal variant="small" onClose={onClose} isOpen={isOpen} data-testid={testId || 'delete-modal'} {...props}>
+      <ModalHeader title={title} titleIconVariant={deleteVariant !== 'easily-recoverable' ? 'warning' : undefined} />
       <ModalBody>
         <Stack hasGutter>
-          <StackItem>
-            The{' '}
-            {isPlural ? (
-              `following ${items}`
-            ) : (
-              <>
-                <b>{itemName}</b> {item}
-              </>
-            )}
-            {toDeleteMessage}
-            {message.resourcesToDelete} will be deleted{isPlural && !message.endNote ? ':' : '.'} {message.endNote}
-            {isPlural && (
-              <List>
-                {itemNames.map((name) => (
-                  <ListItem key={name}>
-                    <b>{name}</b>
-                  </ListItem>
-                ))}
-              </List>
-            )}
-          </StackItem>
+          <StackItem>{children}</StackItem>
           {deleteVariant === 'extra-destructive' && (
             <StackItem>
-              <FormGroup
-                label={
-                  <span>
-                    Type <b>{expectedConfirmationText}</b> to confirm deletion:
-                  </span>
-                }
-              >
+              <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsSm' }}>
+                <FlexItem>{confirmationMessage(deleteName)}</FlexItem>
                 <TextInput
-                  aria-label="Delete modal input"
+                  id={textInputProps?.id ?? 'delete-modal-input'}
+                  data-testid={textInputProps?.id ?? 'delete-modal-input'}
+                  aria-label={textInputProps?.['aria-label'] ?? 'Delete modal input'}
+                  value={confirmationText}
                   onChange={(_e, value) => setConfirmationText(value)}
-                  // validated={confirmed ? 'success' : 'default'}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' && confirmed && !isDeleting) {
+                      event.preventDefault();
+                      onDelete();
+                    }
+                  }}
                 />
-              </FormGroup>
+              </Flex>
+            </StackItem>
+          )}
+          {error && (
+            <StackItem>
+              <Alert
+                data-testid={errorAlertProps?.id ?? 'delete-modal-error-message-alert'}
+                title={errorAlertProps?.title ?? `Error deleting ${deleteName}`}
+                isInline
+                variant="danger"
+              >
+                {error.message}
+              </Alert>
             </StackItem>
           )}
         </Stack>
       </ModalBody>
       <ModalFooter>
         <Button
-          isDisabled={!confirmed}
           variant={deleteVariant !== 'easily-recoverable' ? 'danger' : 'primary'}
-          onClick={onDelete}
+          isDisabled={isDeleting || !confirmed}
+          isLoading={isDeleting}
+          onClick={() => onDelete()}
         >
-          Delete
+          {deleteButtonText}
         </Button>
-        <Button variant="secondary" onClick={onCancel}>
-          Cancel
+        <Button variant="secondary" onClick={onClose}>
+          {cancelButtonText}
         </Button>
-        {error && (
-          <Alert
-            data-testid="delete-model-error-message-alert"
-            title={`Error deleting ${itemToDelete}`}
-            isInline
-            variant="danger"
-          >
-            {error.message}
-          </Alert>
-        )}
       </ModalFooter>
     </Modal>
   );

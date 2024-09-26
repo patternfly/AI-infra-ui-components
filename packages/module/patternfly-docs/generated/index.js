@@ -2,8 +2,8 @@ module.exports = {
   '/extensions/ai-infra-ui-components/react': {
     id: "AI-infra-ui-components",
     title: "AI-infra-ui-components",
-    toc: [{"text":"Basic usage"},[{"text":"Example"},{"text":"Fullscreen example"}]],
-    examples: ["Example"],
+    toc: [{"text":"Basic usage"},[{"text":"Example"},{"text":"Fullscreen example"},{"text":"DeleteModal implementation"}]],
+    examples: ["Example","DeleteModal implementation"],
     fullscreenExamples: ["Fullscreen example"],
     section: "extensions",
     subsection: "",
