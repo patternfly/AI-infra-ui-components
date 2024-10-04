@@ -22,7 +22,7 @@ pageData.examples = {
 
 const Component = () => (
   <React.Fragment>
-    <p {...{"className":"pf-v6-c-content--p ws-p "}}>
+    <p {...{"className":"pf-v6-c-content--p pf-m-editorial ws-p "}}>
       {`Design guidelines intro`}
     </p>
     <AutoLinkHeader {...{"id":"header","headingLevel":"h2","className":"ws-title ws-h2"}}>
@@ -31,20 +31,20 @@ const Component = () => (
     <AutoLinkHeader {...{"id":"sub-header","headingLevel":"h3","className":"ws-title ws-h3"}}>
       {`Sub-header`}
     </AutoLinkHeader>
-    <p {...{"className":"pf-v6-c-content--p ws-p "}}>
+    <p {...{"className":"pf-v6-c-content--p pf-m-editorial ws-p "}}>
       {`Guidelines:`}
     </p>
-    <ol {...{"className":"pf-v6-c-content--ol ws-ol "}}>
-      <li {...{"className":"pf-v6-c-content--li ws-li "}}>
+    <ol {...{"className":"pf-v6-c-content--ol pf-m-editorial ws-ol "}}>
+      <li {...{"className":"pf-v6-c-content--li pf-m-editorial ws-li "}}>
         {`A`}
       </li>
-      <li {...{"className":"pf-v6-c-content--li ws-li "}}>
+      <li {...{"className":"pf-v6-c-content--li pf-m-editorial ws-li "}}>
         {`list`}
       </li>
-      <li {...{"className":"pf-v6-c-content--li ws-li "}}>
+      <li {...{"className":"pf-v6-c-content--li pf-m-editorial ws-li "}}>
         {`using`}
       </li>
-      <li {...{"className":"pf-v6-c-content--li ws-li "}}>
+      <li {...{"className":"pf-v6-c-content--li pf-m-editorial ws-li "}}>
         {`markdown`}
       </li>
     </ol>
