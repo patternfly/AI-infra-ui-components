@@ -55,7 +55,8 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/dom": "^10.4.0",
     "jest-environment-jsdom": "^29.7.0",
-    "serve": "^14.2.3"
+    "serve": "^14.2.3",
+    "surge": "^0.24.6"
   },
   "packageManager": "yarn@1.22.22"
 }
