@@ -1,0 +1,55 @@
+name: pr-preview
+on:
+  pull_request_target:
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
+    env:
+      SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      GH_PR_TOKEN: ${{ secrets.GH_PR_TOKEN }}
+      GH_PR_NUM: ${{ github.event.number }}
+    steps:
+      - name: Check out project from PR branch
+        if: github.event_name == 'pull_request_target'
+        uses: actions/checkout@v4
+        with:
+          # Checkout the merge commit so that we can access the PR's changes.
+          # This is nessesary because `pull_request_target` checks out the base branch (e.g. `main`) by default.
+          ref: refs/pull/${{ env.GH_PR_NUM }}/head
+
+      - name: Check out project
+        if: github.event_name != 'pull_request_target'
+        uses: actions/checkout@v4
+
+        # Setup and build project
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/cache@v4
+        id: npm-cache
+        name: Load npm deps from cache
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn build
+        name: Build AI infra ui components
+      - uses: actions/cache@v4
+        id: docs-cache
+        name: Load webpack cache
+        with:
+          path: '.cache'
+          key: ${{ runner.os }}-v4-${{ hashFiles('yarn.lock') }}
+
+      - run: yarn build:docs
+        name: Build docs
+      - run: node .github/upload-preview.js packages/module/public
+        name: Upload docs
+        if: always()
+      - run: yarn serve:docs & yarn test:a11y
+        name: a11y tests
+      - run: node .github/upload-preview.js packages/module/coverage
+        name: Upload a11y report
+        if: always()
