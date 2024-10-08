@@ -40,34 +40,34 @@ export const DeleteModalBasic: React.FunctionComponent = () => {
       </Stack>
 
       <DeleteModal
-        title="Delete user group?"
-        deleteName="123"
+        title="Delete [item]?"
+        deleteName="item-name"
         onDelete={() => handleModalRecoverableToggle(undefined)}
         deleteVariant="easily-recoverable"
         isOpen={isModalRecoverableOpen}
         onClose={handleModalRecoverableToggle}
       >
-        User group 123 will be deleted.
+        The <strong>item-name</strong> item will be deleted.
       </DeleteModal>
       <DeleteModal
-        title="Delete experiment?"
-        deleteName="cool-exp"
+        title="Delete [item]?"
+        deleteName="item-name"
         onDelete={() => handleModalDestructiveToggle(undefined)}
         deleteVariant="destructive"
         isOpen={isModalDestructiveOpen}
         onClose={handleModalDestructiveToggle}
       >
-        Experiment cool-exp will be deleted.
+        The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
       </DeleteModal>
       <DeleteModal
-        title="Delete project?"
-        deleteName="RedHatAwesome"
+        title="Delete [item]?"
+        deleteName="item-name"
         onDelete={() => handleModalExtraDestructiveToggle(undefined)}
         deleteVariant="extra-destructive"
         isOpen={isModalExtraDestructiveOpen}
         onClose={handleModalExtraDestructiveToggle}
       >
-        Project RedHatAwesome will be deleted.
+        The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
       </DeleteModal>
     </>
   );

@@ -67,17 +67,17 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
   isOpen,
   ...props
 }: DeleteModalProps) => {
-  const [confirmationText, setConfirmationText] = React.useState('');
-  const confirmed = deleteVariant === 'extra-destructive' ? confirmationText.trim() === deleteName : true;
+  const [inputValue, setInputValue] = React.useState('');
+  const confirmed = deleteVariant === 'extra-destructive' ? inputValue.trim() === deleteName : true;
 
   React.useEffect(() => {
     if (!isOpen) {
-      setConfirmationText('');
+      setInputValue('');
     }
   }, [isOpen]);
 
   return (
-    <Modal variant="small" onClose={onClose} isOpen={isOpen} data-testid={testId || 'delete-modal'} {...props}>
+    <Modal variant="small" onClose={onClose} isOpen={isOpen} data-testid={testId ?? 'delete-modal'} {...props}>
       <ModalHeader title={title} titleIconVariant={deleteVariant !== 'easily-recoverable' ? 'warning' : undefined} />
       <ModalBody>
         <Stack hasGutter>
@@ -85,13 +85,13 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
           {deleteVariant === 'extra-destructive' && (
             <StackItem>
               <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsSm' }}>
-                <FlexItem>{confirmationMessage(deleteName)}</FlexItem>
+                <FlexItem id="confirmation-message">{confirmationMessage(deleteName)}</FlexItem>
                 <TextInput
                   id={textInputProps?.id ?? 'delete-modal-input'}
                   data-testid={textInputProps?.id ?? 'delete-modal-input'}
-                  aria-label={textInputProps?.['aria-label'] ?? 'Delete modal input'}
-                  value={confirmationText}
-                  onChange={(_e, value) => setConfirmationText(value)}
+                  aria-labelledby="confirmation-message"
+                  value={inputValue}
+                  onChange={(_e, value) => setInputValue(value)}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter' && confirmed && !isDeleting) {
                       event.preventDefault();
