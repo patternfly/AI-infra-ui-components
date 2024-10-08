@@ -27,38 +27,41 @@ export const DeleteModalBasic: React.FunctionComponent = () => {
         </StackItem>
       </Stack>
 
-      <DeleteModal
-        title="Delete [item]?"
-        deleteName="item-name"
-        onDelete={() => {}}
-        deleteVariant="easily-recoverable"
-        isOpen={isModalRecoverableOpen}
-        onClose={() => setIsModalRecoverableOpen(false)}
-      >
-        The <strong>item-name</strong> item will be deleted.
-      </DeleteModal>
+      {isModalRecoverableOpen && (
+        <DeleteModal
+          title="Delete [item]?"
+          deleteName="item-name"
+          onDelete={() => {}}
+          deleteVariant="easily-recoverable"
+          onClose={() => setIsModalRecoverableOpen(false)}
+        >
+          The <strong>item-name</strong> item will be deleted.
+        </DeleteModal>
+      )}
 
-      <DeleteModal
-        title="Delete [item]?"
-        deleteName="item-name"
-        onDelete={() => {}}
-        deleteVariant="destructive"
-        isOpen={isModalDestructiveOpen}
-        onClose={() => setIsModalDestructiveOpen(false)}
-      >
-        The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
-      </DeleteModal>
+      {isModalDestructiveOpen && (
+        <DeleteModal
+          title="Delete [item]?"
+          deleteName="item-name"
+          onDelete={() => {}}
+          deleteVariant="destructive"
+          onClose={() => setIsModalDestructiveOpen(false)}
+        >
+          The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
+        </DeleteModal>
+      )}
 
-      <DeleteModal
-        title="Delete [item]?"
-        deleteName="item-name"
-        onDelete={() => {}}
-        deleteVariant="extra-destructive"
-        isOpen={isModalExtraDestructiveOpen}
-        onClose={() => setIsModalExtraDestructiveOpen(false)}
-      >
-        The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
-      </DeleteModal>
+      {isModalExtraDestructiveOpen && (
+        <DeleteModal
+          title="Delete [item]?"
+          deleteName="item-name"
+          onDelete={() => {}}
+          deleteVariant="extra-destructive"
+          onClose={() => setIsModalExtraDestructiveOpen(false)}
+        >
+          The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
+        </DeleteModal>
+      )}
     </>
   );
 };

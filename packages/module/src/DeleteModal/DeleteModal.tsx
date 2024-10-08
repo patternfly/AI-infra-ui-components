@@ -16,7 +16,7 @@ import {
   TextInputProps
 } from '@patternfly/react-core';
 
-export type DeleteModalProps = Omit<ModalProps, 'onClose'> & {
+export type DeleteModalProps = Omit<ModalProps, 'onClose' | 'isOpen'> & {
   /** Content rendered inside the modal header title. */
   title: React.ReactNode;
   /** Delete variant. Destructive and extra-destructive variants will show a warning icon and danger button. For extra-destructive variant, text input confirmation is needed. */
@@ -66,7 +66,6 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
   textInputProps,
   errorAlertProps,
   onClose,
-  isOpen,
   ...props
 }: DeleteModalProps) => {
   const [inputValue, setInputValue] = React.useState('');
@@ -75,14 +74,8 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
 
   const confirmed = deleteVariant === 'extra-destructive' ? inputValue.trim() === deleteNameSanitized : true;
 
-  React.useEffect(() => {
-    if (!isOpen) {
-      setInputValue('');
-    }
-  }, [isOpen]);
-
   return (
-    <Modal variant="small" onClose={onClose} isOpen={isOpen} data-testid={testId ?? 'delete-modal'} {...props}>
+    <Modal variant="small" onClose={onClose} isOpen data-testid={testId ?? 'delete-modal'} {...props}>
       <ModalHeader title={title} titleIconVariant={deleteVariant !== 'easily-recoverable' ? 'warning' : undefined} />
       <ModalBody>
         <Stack hasGutter>

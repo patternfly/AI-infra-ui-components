@@ -2,8 +2,8 @@ module.exports = {
   '/extensions/deletemodal/react': {
     id: "DeleteModal",
     title: "DeleteModal",
-    toc: [{"text":"Basic usage"},[{"text":"Example"},{"text":"Fullscreen example"},{"text":"DeleteModal implementation"}]],
-    examples: ["Example","DeleteModal implementation"],
+    toc: [{"text":"Basic usage"},[{"text":"Example"},{"text":"Fullscreen example"}]],
+    examples: ["Example"],
     fullscreenExamples: ["Fullscreen example"],
     section: "extensions",
     subsection: "",
