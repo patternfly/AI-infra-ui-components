@@ -7,33 +7,21 @@ export const DeleteModalBasic: React.FunctionComponent = () => {
   const [isModalDestructiveOpen, setIsModalDestructiveOpen] = React.useState(false);
   const [isModalExtraDestructiveOpen, setIsModalExtraDestructiveOpen] = React.useState(false);
 
-  const handleModalRecoverableToggle = (_event: KeyboardEvent | React.MouseEvent | undefined) => {
-    setIsModalRecoverableOpen(!isModalRecoverableOpen);
-  };
-
-  const handleModalDestructiveToggle = (_event: KeyboardEvent | React.MouseEvent | undefined) => {
-    setIsModalDestructiveOpen(!isModalDestructiveOpen);
-  };
-
-  const handleModalExtraDestructiveToggle = (_event: KeyboardEvent | React.MouseEvent | undefined) => {
-    setIsModalExtraDestructiveOpen(!isModalExtraDestructiveOpen);
-  };
-
   return (
     <>
       <Stack hasGutter style={{ marginBottom: '2rem' }}>
         <StackItem>
-          <Button variant="primary" onClick={handleModalRecoverableToggle}>
+          <Button variant="primary" onClick={() => setIsModalRecoverableOpen(true)}>
             Show delete modal (Easily recoverable)
           </Button>
         </StackItem>
         <StackItem>
-          <Button variant="primary" onClick={handleModalDestructiveToggle}>
+          <Button variant="primary" onClick={() => setIsModalDestructiveOpen(true)}>
             Show delete modal (Destructive)
           </Button>
         </StackItem>
         <StackItem>
-          <Button variant="primary" onClick={handleModalExtraDestructiveToggle}>
+          <Button variant="primary" onClick={() => setIsModalExtraDestructiveOpen(true)}>
             Show delete modal (Extra destructive)
           </Button>
         </StackItem>
@@ -42,30 +30,32 @@ export const DeleteModalBasic: React.FunctionComponent = () => {
       <DeleteModal
         title="Delete [item]?"
         deleteName="item-name"
-        onDelete={() => handleModalRecoverableToggle(undefined)}
+        onDelete={() => {}}
         deleteVariant="easily-recoverable"
         isOpen={isModalRecoverableOpen}
-        onClose={handleModalRecoverableToggle}
+        onClose={() => setIsModalRecoverableOpen(false)}
       >
         The <strong>item-name</strong> item will be deleted.
       </DeleteModal>
+
       <DeleteModal
         title="Delete [item]?"
         deleteName="item-name"
-        onDelete={() => handleModalDestructiveToggle(undefined)}
+        onDelete={() => {}}
         deleteVariant="destructive"
         isOpen={isModalDestructiveOpen}
-        onClose={handleModalDestructiveToggle}
+        onClose={() => setIsModalDestructiveOpen(false)}
       >
         The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
       </DeleteModal>
+
       <DeleteModal
         title="Delete [item]?"
         deleteName="item-name"
-        onDelete={() => handleModalExtraDestructiveToggle(undefined)}
+        onDelete={() => {}}
         deleteVariant="extra-destructive"
         isOpen={isModalExtraDestructiveOpen}
-        onClose={handleModalExtraDestructiveToggle}
+        onClose={() => setIsModalExtraDestructiveOpen(false)}
       >
         The <strong>item-name</strong> item will be deleted. [Brief sentence describing consequence of action].
       </DeleteModal>

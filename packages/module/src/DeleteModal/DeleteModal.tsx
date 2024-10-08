@@ -16,7 +16,7 @@ import {
   TextInputProps
 } from '@patternfly/react-core';
 
-export type DeleteModalProps = ModalProps & {
+export type DeleteModalProps = Omit<ModalProps, 'onClose'> & {
   /** Content rendered inside the modal header title. */
   title: React.ReactNode;
   /** Delete variant. Destructive and extra-destructive variants will show a warning icon and danger button. For extra-destructive variant, text input confirmation is needed. */
@@ -26,13 +26,15 @@ export type DeleteModalProps = ModalProps & {
   /** Message describing what should the user type in to confirm deletion (only for extra-destructive delete variant) */
   confirmationMessage?: (deleteName: string) => React.ReactNode;
   /** Text of the delete button */
-  deleteButtonText?: string;
+  submitButtonLabel?: string;
   /** Text of the cancel button */
   cancelButtonText?: string;
   /** Callback on clicking the delete button */
   onDelete: () => void;
+  /** Callback on clicking the close button */
+  onClose: () => void;
   /** Flag indicating that deletion is currently in progress */
-  isDeleting?: boolean;
+  deleting?: boolean;
   /** Error indicating deletion has failed */
   error?: Error;
   /** Id of the modal for testing purposes (defaults to "delete-modal") */
@@ -55,10 +57,10 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
       Type <strong>{deleteName}</strong> to confirm deletion:
     </>
   ),
-  deleteButtonText = 'Delete',
+  submitButtonLabel: deleteButtonText = 'Delete',
   cancelButtonText = 'Cancel',
   onDelete,
-  isDeleting,
+  deleting: isDeleting,
   error,
   testId,
   textInputProps,
@@ -68,7 +70,10 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
   ...props
 }: DeleteModalProps) => {
   const [inputValue, setInputValue] = React.useState('');
-  const confirmed = deleteVariant === 'extra-destructive' ? inputValue.trim() === deleteName : true;
+
+  const deleteNameSanitized = React.useMemo(() => deleteName.trim().replace(/\s+/g, ' '), [deleteName]);
+
+  const confirmed = deleteVariant === 'extra-destructive' ? inputValue.trim() === deleteNameSanitized : true;
 
   React.useEffect(() => {
     if (!isOpen) {
@@ -85,7 +90,7 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
           {deleteVariant === 'extra-destructive' && (
             <StackItem>
               <Flex direction={{ default: 'column' }} spaceItems={{ default: 'spaceItemsSm' }}>
-                <FlexItem id="confirmation-message">{confirmationMessage(deleteName)}</FlexItem>
+                <FlexItem id="confirmation-message">{confirmationMessage(deleteNameSanitized)}</FlexItem>
                 <TextInput
                   id={textInputProps?.id ?? 'delete-modal-input'}
                   data-testid={textInputProps?.id ?? 'delete-modal-input'}
@@ -105,8 +110,8 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
           {error && (
             <StackItem>
               <Alert
-                data-testid={errorAlertProps?.id ?? 'delete-modal-error-message-alert'}
-                title={errorAlertProps?.title ?? `Error deleting ${deleteName}`}
+                data-testid={errorAlertProps?.id ?? 'delete-model-error-message-alert'}
+                title={errorAlertProps?.title ?? `Error deleting ${deleteNameSanitized}`}
                 isInline
                 variant="danger"
               >
