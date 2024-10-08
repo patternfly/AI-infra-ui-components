@@ -4,7 +4,7 @@
 section: extensions
 # Sidenav secondary level section
 # should be the same for all markdown files for each extension
-id: AI-infra-ui-components
+id: DeleteModal
 # Tab (react | react-demos | html | html-demos | design-guidelines | accessibility)
 source: design-guidelines
 ---

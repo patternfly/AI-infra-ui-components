@@ -1,7 +1,7 @@
 module.exports = {
-  '/extensions/ai-infra-ui-components/react': {
-    id: "AI-infra-ui-components",
-    title: "AI-infra-ui-components",
+  '/extensions/deletemodal/react': {
+    id: "DeleteModal",
+    title: "DeleteModal",
     toc: [{"text":"Basic usage"},[{"text":"Example"},{"text":"Fullscreen example"},{"text":"DeleteModal implementation"}]],
     examples: ["Example","DeleteModal implementation"],
     fullscreenExamples: ["Fullscreen example"],
@@ -9,16 +9,16 @@ module.exports = {
     subsection: "",
     source: "react",
     tabName: null,
-    Component: () => import(/* webpackChunkName: "extensions/ai-infra-ui-components/react/index" */ './extensions/ai-infra-ui-components/react')
+    Component: () => import(/* webpackChunkName: "extensions/deletemodal/react/index" */ './extensions/deletemodal/react')
   },
-  '/extensions/ai-infra-ui-components/design-guidelines': {
-    id: "AI-infra-ui-components",
-    title: "AI-infra-ui-components",
+  '/extensions/deletemodal/design-guidelines': {
+    id: "DeleteModal",
+    title: "DeleteModal",
     toc: [{"text":"Header"},[{"text":"Sub-header"}]],
     section: "extensions",
     subsection: "",
     source: "design-guidelines",
     tabName: null,
-    Component: () => import(/* webpackChunkName: "extensions/ai-infra-ui-components/design-guidelines/index" */ './extensions/ai-infra-ui-components/design-guidelines')
+    Component: () => import(/* webpackChunkName: "extensions/deletemodal/design-guidelines/index" */ './extensions/deletemodal/design-guidelines')
   }
 };
