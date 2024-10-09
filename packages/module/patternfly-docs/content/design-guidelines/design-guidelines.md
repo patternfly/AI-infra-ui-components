@@ -1,7 +1,7 @@
 ---
 # Sidenav top-level section
 # should be the same for all markdown files for each extension
-section: extensions
+section: AI-infra-ui-components
 # Sidenav secondary level section
 # should be the same for all markdown files for each extension
 id: DeleteModal
