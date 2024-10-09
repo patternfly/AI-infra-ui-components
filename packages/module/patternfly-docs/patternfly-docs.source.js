@@ -8,7 +8,7 @@ module.exports = (sourceMD, sourceProps) => {
 
   // Parse md files
   const contentBase = path.join(__dirname, './content');
-  sourceMD(path.join(contentBase, '/**/*.md'), 'extensions');
+  sourceMD(path.join(contentBase, '/**/*.md'), 'AI-infra-ui-components');
 
   /**
     If you want to parse content from node_modules instead of providing a relative/absolute path, 
