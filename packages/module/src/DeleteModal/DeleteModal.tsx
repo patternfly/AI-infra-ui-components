@@ -37,7 +37,7 @@ export type DeleteModalProps = Omit<ModalProps, 'onClose' | 'isOpen'> & {
   deleting?: boolean;
   /** Error indicating deletion has failed */
   error?: Error;
-  /** Id of the modal for testing purposes (defaults to "delete-modal") */
+  /** Id of the modal for testing purposes */
   testId?: string;
   /** Additional props for confirmation text input (only for extra-destructive delete variant) */
   textInputProps?: TextInputProps;
@@ -62,7 +62,7 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
   onDelete,
   deleting: isDeleting,
   error,
-  testId,
+  testId = 'delete-modal',
   textInputProps,
   errorAlertProps,
   onClose,
@@ -75,7 +75,7 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
   const confirmed = deleteVariant === 'extra-destructive' ? inputValue.trim() === deleteNameSanitized : true;
 
   return (
-    <Modal variant="small" onClose={onClose} isOpen data-testid={testId ?? 'delete-modal'} {...props}>
+    <Modal variant="small" onClose={onClose} isOpen data-testid={testId} {...props}>
       <ModalHeader title={title} titleIconVariant={deleteVariant !== 'easily-recoverable' ? 'warning' : undefined} />
       <ModalBody>
         <Stack hasGutter>
