@@ -28,6 +28,11 @@ jobs:
           key: ${{ runner.os }}-yarn-14-${{ secrets.CACHE_VERSION }}-${{ hashFiles('yarn.lock') }}
       - run: yarn install --frozen-lockfile
         if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - run: yarn build:docs
+        name: Build docs
+      - run: node .github/upload-preview.js packages/module/public
+        name: Upload docs
+        if: always()
       - uses: actions/cache@v4
         id: dist
         name: Cache dist
