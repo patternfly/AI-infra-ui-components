@@ -22,7 +22,7 @@ const publishFn = surge().publish();
   }
 
   const uploadFolderName = path.basename(uploadFolder);
-  let uploadURL = `${repo}-${prnum ? `pr-ai-infra-ui-components-${prnum}` : prbranch}`.replace(/[\/|\.]/g, '-');
+  let uploadURL = `${repo}-${prnum ? `pr-${prnum}` : prbranch}`.replace(/[\/|\.]/g, '-');
 
   switch(uploadFolderName) {
     case 'coverage':
