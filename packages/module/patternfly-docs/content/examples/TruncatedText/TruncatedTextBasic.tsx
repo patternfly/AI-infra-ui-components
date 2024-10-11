@@ -2,8 +2,7 @@ import React from 'react';
 
 import { TruncatedText } from "@patternfly/ai-infra-ui-components";
 
-export const TruncatedTextBasic: React.FunctionComponent = () => {
-  return (
+export const TruncatedTextBasic: React.FunctionComponent = () => (
     <>
       <div style={{
         width: '320px',
@@ -25,4 +24,3 @@ export const TruncatedTextBasic: React.FunctionComponent = () => {
       </div>
     </>
   )
-}
