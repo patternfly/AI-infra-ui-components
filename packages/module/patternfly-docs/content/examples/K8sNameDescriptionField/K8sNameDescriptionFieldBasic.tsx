@@ -4,12 +4,13 @@ import {
   K8sNameDescriptionFieldData,
   UseK8sNameDescriptionFieldData
 } from '@patternfly/ai-infra-ui-components';
-import { Form } from '@patternfly/react-core';
+import { Checkbox, Form } from '@patternfly/react-core';
 
 export const K8sNameDescriptionFieldBasic: React.FunctionComponent = () => {
   const [name, setName] = React.useState('');
   const [resourceName, setResourceName] = React.useState<string | null>(null);
   const [description, setDescription] = React.useState('');
+  const [showDescription, setShowDescription] = React.useState(true);
 
   const createResourceName = (name: string) => name.toLowerCase().replaceAll(' ', '-');
   const RESOURCE_NAME_MAX_LENGTH = 30;
@@ -41,8 +42,21 @@ export const K8sNameDescriptionFieldBasic: React.FunctionComponent = () => {
   };
 
   return (
-    <Form>
-      <K8sNameDescriptionField data={data} dataTestId="example-0" onDataChange={onDataChange} />
-    </Form>
+    <>
+      <Checkbox
+        id="checkbox-1"
+        onClick={() => setShowDescription((checked) => !checked)}
+        checked={showDescription}
+        label="Show description"
+      />
+      <Form>
+        <K8sNameDescriptionField
+          showDescription={showDescription}
+          data={data}
+          dataTestId="example-0"
+          onDataChange={onDataChange}
+        />
+      </Form>
+    </>
   );
 };

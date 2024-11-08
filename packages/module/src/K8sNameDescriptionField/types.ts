@@ -23,8 +23,6 @@ export type K8sNameDescriptionFieldData = {
   };
 };
 
-export type NameWithResourceNameFieldData = Omit<K8sNameDescriptionFieldData, 'description'>;
-
 type K8sNameDescriptionFieldUpdateFunctionTemplate<T> = (
   key: keyof K8sNameDescriptionFieldData,
   value: string // always the value; directly or k8sName.value
