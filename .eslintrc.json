@@ -84,7 +84,6 @@
     ],
     "no-unused-labels": "error",
     "no-var": "error",
-    "object-shorthand": "error",
     "one-var": ["error", "never"],
     "prefer-const": "error",
     "radix": ["error", "as-needed"],
