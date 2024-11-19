@@ -155,5 +155,7 @@ jobs:
         if: steps.dist.outputs.cache-hit != 'true'
       - name: Build docs
         run: yarn build:docs
+      - name: Install Chrome for Puppeteer
+        run: npx puppeteer browsers install chrome
       - name: A11y tests
         run: yarn serve:docs & yarn test:a11y
