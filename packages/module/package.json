@@ -29,7 +29,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@patternfly/react-core": "6.0.0"
+    "@patternfly/react-core": "6.0.0",
+    "@patternfly/react-component-groups": "6.1.0-prerelease.3"
   },
   "peerDependencies": {
     "react": "^18",
