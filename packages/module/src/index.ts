@@ -4,3 +4,4 @@ export * from './FieldGroupHelpLabelIcon';
 export * from './IndentSection';
 export * from './K8sNameDescriptionField';
 export * from './TruncatedText';
+export * from './EmptyStateErrorMessage';
