@@ -123,7 +123,7 @@ export const DeleteModal: React.FunctionComponent<DeleteModalProps> = ({
         >
           {deleteButtonText}
         </Button>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="link" onClick={onClose}>
           {cancelButtonText}
         </Button>
       </ModalFooter>
