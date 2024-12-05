@@ -5,3 +5,4 @@ export * from './IndentSection';
 export * from './K8sNameDescriptionField';
 export * from './TruncatedText';
 export * from './EmptyStateErrorMessage';
+export * from './PasswordInput'
