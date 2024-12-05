@@ -19,7 +19,7 @@ export const PasswordHiddenText: React.FunctionComponent<PasswordHiddenTextProps
 
   return (
     <Flex
-      spaceItems={{ default: 'spaceItemsNone' }}
+      spaceItems={{ default: 'spaceItemsXs' }}
       spacer={{ default: 'spacerNone' }}
       alignItems={{ default: 'alignItemsCenter' }}
       flexWrap={{ default: 'nowrap' }}
