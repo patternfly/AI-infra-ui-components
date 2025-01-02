@@ -9,7 +9,6 @@ export const EmptyDetailsViewBasic: React.FunctionComponent = () => (
     description="Cluster storage saves your project’s data on a selected cluster. You can optionally connect cluster storage to a workbench."
     iconImage={clusterImage}
     imageSize="320px"
-    imageAlt="add cluster storage"
     createButton={<Button>Add cluster storage</Button>}
     footerExtraChildren={
       <EmptyStateActions>

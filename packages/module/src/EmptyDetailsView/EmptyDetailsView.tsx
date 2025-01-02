@@ -30,7 +30,7 @@ export const EmptyDetailsView: React.FunctionComponent<EmptyDetailsViewProps> = 
   title,
   description,
   iconImage,
-  imageAlt,
+  imageAlt = '',
   allowCreate = true,
   createButton,
   footerExtraChildren = null,
